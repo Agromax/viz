@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="https://code.jquery.com/jquery-3.0.0.min.js"
+			  integrity="sha256-JmvOoLtYsmqlsWxa7mDSLMwa6dZ9rrIdtrrVYRnDRH0="
+			  crossorigin="anonymous"></script>
+
+	<style>
+
+		body {
+			padding: 0;
+			margin: 0;
+		}
+
+		.slider {
+			overflow-x: hidden;
+			overflow-y: hidden;
+			height: 50px;
+			width: 800px;
+			border: dashed 1px hotpink;
+		}
+
+		.slider-content {
+			width: 800px;
+			height: 50px;
+			line-height: 50px;
+			text-align: center;
+		}
+	</style>
+</head>
+<body>
+
+<div class="slider">
+	<div class="slider-content" id="visible">First Slider</div>
+	<!-- <div class="slider-content" id="buffer">Second Slider</div> -->
+</div>
+<div>
+	This is inside another div
+</div>
+
+
+<script type="text/javascript">
+var BUFFER_SLIDE_ID 	= "buffer-slide";
+var VISIBLE_SLIDE_ID 	= "visible-0";
+
+var lastColor = 0;
+var colorList = ["steelblue", "hotpink", "seagreen"];
+
+
+function getColor() {
+	var i = lastColor;
+	lastColor = (lastColor + 1) % colorList.length;
+	return colorList[i];
+}
+
+function slide() {
+	makeBufferSlide({
+		html: "<span>Buffer slide it is</span>",
+		css: {
+			color: "#FFFFFF",
+			backgroundColor: getColor(),
+			height: 'inherit',
+			width: "800px",
+			zIndex: 1,
+			transform: "translate(100vw, -50px)",
+			transition: "transform 0s"
+		}
+	}, function(div) {
+		// Slide the buffer slide to the left, making a transition effect
+		$('#' + BUFFER_SLIDE_ID).css({
+			transform: "translate(0vw, -50px)",
+			transition: "transform 1s"
+		})
+		/*div.css({
+			transform: "translate(0vw, -50px)",
+			transition: "all 1s ease 4s"
+		});*/
+		$('#' + VISIBLE_SLIDE_ID).css({
+			transform: "translate(-100vw, -50px)",
+			transition: "transform 1s"
+		});
+
+		setTimeout(function() {
+			$('#' + VISIBLE_SLIDE_ID).remove();
+			div
+			.attr("id", VISIBLE_SLIDE_ID)
+			.css("z-index", 1);
+
+		}, 1800);
+	});
+}
+
+
+function makeBufferSlide(props, callback) {
+	var content 	= props.html || "";
+	var cssProps 	= props.css || {};
+
+	var div = $(makeDiv(content));
+	$('.slider').append(div);
+	div.css(cssProps);
+
+	setTimeout(function(){ 
+		callback(div); 
+	}, 1000);	
+}
+
+
+function makeDiv(markup) {
+	var el = document.createElement('div');
+	el.innerHTML 	= markup;
+	el.id 			= BUFFER_SLIDE_ID;	
+	return el;
+}
+
+setInterval(slide, 6000);
+
+</script>
+
+</body>
+</html>

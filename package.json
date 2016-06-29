@@ -1,0 +1,27 @@
+{
+  "name": "ask_backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "start.js",
+  "scripts": {
+    "test": "node start",
+    "build": "browserify -t [ babelify ] ./react_code/webapp.js -o ./public/react_build/bundle.js"
+  },
+  "author": "shadow_lord",
+  "license": "ISC",
+  "dependencies": {
+    "adiff": "^0.2.13",
+    "babel-preset-react": "^6.11.1",
+    "babelify": "^7.3.0",
+    "body-parser": "^1.15.2",
+    "browserify": "^13.0.1",
+    "express": "^4.13.4",
+    "express-ws": "^2.0.0-rc.1",
+    "jade": "^1.11.0",
+    "mysql": "^2.11.1",
+    "react": "^15.1.0",
+    "react-dom": "^15.1.0",
+    "sequelize": "^3.23.3",
+    "ws": "^1.1.0"
+  }
+}
